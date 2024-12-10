@@ -1,0 +1,29 @@
+<div th:fragment="showDoctorsFragment">
+    <h2 class="mb-3">Appointments</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Doctor Name</th>
+            <th scope="col">Patient Name</th>
+            <th scope="col">Patient Mobile</th>
+            <th scope="col">Appointment Date &amp; Time</th>
+            <th scope="col">Appointment Reason</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${count} == 0"><td colspan="6" class="text-center">No Appointment Found</td></tr>
+
+        <tr th:each="appointment: ${appointments}">
+            <td th:text="${appointment.doctorName}"></td>
+            <td th:text="${appointment.patientName}"></td>
+            <td th:text="${appointment.patientMobile}"></td>
+            <td th:text="${appointment.appointmentAt}"></td>
+            <td th:text="${appointment.appointmentReason}"></td>
+            <td>
+                <button class="delete-btn btn btn-danger btn-sm" th:data-link="@{/deleteAppointment/{id}(id=${appointment.id})}" onclick="window.location.href=this.dataset.link;" >Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

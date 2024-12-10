@@ -1,0 +1,13 @@
+<div th:fragment="deleteDoctorFragment">
+    <div th:if="${apiResponse.isSuccess()} == false" class="text-center">
+        <div class="alert alert-danger" th:text="${apiResponse.message}"></div>
+        <a class="btn-primary btn btn-link me-2" th:href="@{/showPatients}">Skip</a>
+        <a class="btn-primary btn btn-link" th:href="@{/deletePatient/{id}(id=${id})}">Retry</a>
+    </div>
+
+    <div th:if="${apiResponse.isSuccess()} == true" class="text-center">
+        <h1 class="display-3 mt-5 mb-5" th:text="${apiResponse.message}"></h1>
+        <a class="btn-primary btn btn-link me-2" th:href="@{/showPatients}">Show Patients</a>
+        <a class="btn-primary btn btn-link" th:href="@{/createPatient}">Create Patient</a>
+    </div>
+</div>

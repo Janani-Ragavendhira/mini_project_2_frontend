@@ -1,0 +1,26 @@
+<div th:fragment="showPatientsFragment">
+    <h2 class="mb-3">Patients</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Patient Name</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Address</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${patients} == null"><td colspan="4" class="text-center">No Patient Found</td></tr>
+
+        <tr th:each="patient: ${patients}">
+            <td th:text="${patient.name}"></td>
+            <td th:text="${patient.mobile}"></td>
+            <td th:text="${patient.address}"></td>
+            <td>
+                <button class="update-btn btn btn-primary btn-sm" th:data-link="@{/editPatient/{id}(id=${patient.id})}" onclick="window.location.href=this.dataset.link;" >Update</button>
+                <button class="delete-btn btn btn-danger btn-sm" th:data-link="@{/deletePatient/{id}(id=${patient.id})}" onclick="window.location.href=this.dataset.link;" >Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

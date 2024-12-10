@@ -1,0 +1,59 @@
+<div th:fragment="createDoctorFragment">
+    <div id="alerts" th:if="${showStatus} == true">
+
+        <div th:if="${apiResponse.isSuccess()} == false" class="text-center">
+            <div class="alert alert-danger" th:text="${apiResponse.message}"></div>
+            <a class="btn-primary btn btn-link me-2" th:href="@{/showDoctors}">Skip</a>
+            <a class="btn-primary btn btn-link" th:href="@{/editDoctor/{id}(id=${doctorMdl.id})}">Retry</a>
+        </div>
+
+        <div th:if="${apiResponse.isSuccess()} == true" class="text-center">
+            <h1 class="display-3 mt-5 mb-5" th:text="${apiResponse.message}"></h1>
+        </div>
+    </div>
+
+    <section th:if="${showStatus} != true" id="form_section" class="section">
+
+        <h2 class="mb-3">Create Appointment</h2>
+
+        <div class="row">
+            <div class="col-6">
+                <form id="form" th:action="@{/saveAppointment}" method="post" th:object="${appointmentMdl}">
+                    <input type="hidden" name="id" th:field="*{id}" />
+                    <div class="mb-3">
+                        <label for="doctorId" class="form-label">Doctor</label>
+                        <select name="doctorId" id="doctorId" th:field="*{doctorId}" class="form-control">
+                            <option th:each="doctor : ${appointmentForm.doctors}" th:value="${doctor.id}">
+                                <span th:text="${doctor.name}"></span> - <span th:text="${doctor.specialist}"></span>
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="patientId" class="form-label">Doctor</label>
+                        <select name="patientId" id="patientId" th:field="*{patientId}" class="form-control">
+                            <option th:each="patient : ${appointmentForm.patients}" th:value="${patient.id}">
+                                <span th:text="${patient.name}"></span> - <span th:text="${patient.mobile}"></span>
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="appointmentAt" class="form-label display-block">Appointment Date &amp; Time</label>
+                        <input type="datetime-local" name="appointmentAt" id="appointmentAt" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="appointmentReason" class="form-label display-block">Appointment Reason</label>
+                        <textarea name="appointmentReason" id="appointmentReason" class="form-control" placeholder="Enter Reason for Appointment"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <button id="save" class="btn-primary btn">Save</button>
+                        <button class="btn-default btn" type="button" th:data-link="@{/showAppointments}" onclick="{event.preventDefault(); window.location.href=this.dataset.link;}">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
